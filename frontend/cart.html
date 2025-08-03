@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JessaHerz | Handmade Goods & Gifts</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    tailwind.config = { corePlugins: { preflight: false } };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100" id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+  <div id="navbar"></div>
+  <section class="py-8">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center mb-6">Your Cart</h2>
+      <div id="loading" class="flex justify-center py-10">
+        <div class="w-12 h-12 border-4 border-blue-300 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <div id="cart-items" class="space-y-4"></div>
+        </div>
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-lg shadow p-4 sticky top-20">
+            <h4 class="text-xl font-semibold mb-4" id="cart-total">Total: €0.00</h4>
+            <div class="space-y-2">
+              <button onclick="window.location.href='shop.html'" class="w-full py-2 px-4 bg-gray-200 rounded hover:bg-gray-300">Continue Shopping</button>
+              <button id="checkout-btn" onclick="persistAndCheckout()" class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">Proceed to Checkout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    const userId = localStorage.getItem('userId');
+    const apiBaseUrl = "https://70a1dz3t08.execute-api.us-east-1.amazonaws.com/prod/cart";
+    let cartData = [];
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      container.innerHTML = '';
+      if (cartData.length === 0) {
+        container.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+        document.getElementById('cart-total').innerText = 'Total: €0.00';
+        return;
+      }
+      let total = 0;
+      cartData.forEach(item => {
+        const price = parseFloat(item.price.toString().replace(/[^\d.]/g, ''));
+        const quantity = parseInt(item.quantity);
+        const subtotal = price * quantity;
+        total += subtotal;
+        const size = item.size;
+        let img = item.image_url;
+        if (img && img.startsWith('https://zahzouh.de/uploads/')) {
+          img = img.replace('https://zahzouh.de/uploads/', 'https://s3.eu-west-1.amazonaws.com/zahzouh.de/uploads/');
+        }
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-lg shadow p-4 flex items-center';
+        card.setAttribute('data-product-id', item.product_id);
+        card.innerHTML = `
+          <img src="${img}" alt="${item.product_name}" class="w-20 h-20 object-cover rounded mr-4">
+          <div class="flex-1">
+            <h4 class="font-semibold">${item.product_name}</h4>
+            <p class="text-sm text-gray-500">Size: ${size}</p>
+            <p class="text-sm text-gray-500 mt-2">Quantity: ${quantity}</p>
+          </div>
+          <div class="text-right mr-4">
+            <p>€${price.toFixed(2)}</p>
+            <p class="text-sm text-gray-600">Subtotal: €${subtotal.toFixed(2)}</p>
+          </div>
+            <button class="delete-item text-red-600 hover:text-red-800" data-product-id="${item.product_id}"><i class="fa fa-trash"></i></button>
+        `;
+        container.appendChild(card);
+      });
+      document.getElementById('cart-total').innerText = `Total: €${total.toFixed(2)}`;
+      attachHandlers();
+    }
+    function attachHandlers() {
+      document.querySelectorAll('.delete-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const productId = btn.getAttribute('data-product-id');
+          Swal.fire({
+            title: 'Remove item?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete'
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                const res = await fetch(apiBaseUrl, {
+                  method: 'DELETE',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ userId, productId, size: cartData.find(i => i.product_id == productId).size })
+                });
+                if (res.ok) {
+                  cartData = cartData.filter(i => i.product_id != productId);
+                  renderCart();
+                  updateCartCount();
+                }
+              } catch (err) { console.error('Error deleting item', err); }
+            }
+          });
+        });
+      });
+    }
+    function persistAndCheckout() {
+      const btn = document.getElementById('checkout-btn');
+      if (btn) btn.disabled = true;
+      window.location.href = 'checkout.html';
+    }
+    async function loadCart() {
+      document.getElementById('loading').classList.remove('hidden');
+      const container = document.getElementById('cart-items');
+      try {
+        const response = await fetch(`${apiBaseUrl}?userId=${userId}&t=${Date.now()}`);
+        const cart = await response.json();
+        cartData = Array.isArray(cart) ? cart : [];
+        renderCart();
+      } catch (err) {
+        container.innerHTML = '<p class="text-red-600 text-center">Failed to load cart.</p>';
+      } finally {
+        document.getElementById('loading').classList.add('hidden');
+      }
+    }
+    async function updateCartCount() {
+      try {
+        const res = await fetch(`${apiBaseUrl}?userId=${userId}&t=${Date.now()}`);
+        const items = await res.json();
+        const count = Array.isArray(items) ? items.length : 0;
+        const badge = document.getElementById('cart-count');
+        if (badge) badge.textContent = count;
+      } catch (e) {
+        console.error('Error updating cart count', e);
+      }
+    }
+      loadCart();
+
+      fetch('navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+          updateCartCount();
+        });
+
+      fetch('footer.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('footer').innerHTML = html);
+  </script>
+</body>
+</html>

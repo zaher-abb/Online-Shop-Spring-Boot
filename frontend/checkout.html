@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>JessaHerz | Handmade Goods & Gifts</title>
+    <!--
+
+    Template 2083 Steak House
+
+    http://www.tooplate.com/view/2083-steak-house
+
+    -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!-- stylesheets css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/nivo-lightbox.css">
+    <link rel="stylesheet" href="css/nivo_themes/default/default.css">
+
+    <link rel="stylesheet" href="css/hover-min.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- PayPal SDK (IMPORTANT) -->
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AU1J2-ssbN1keGziJhoVpswl9XyZb9gZhz3xRpnzpU2Ir6h3AP7EKWcwvI-ssVO7x-bEQ3SDG4Ne-D28&currency=EUR"></script>
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+
+<!-- Navbar placeholder -->
+<div id="navbar"></div>
+
+<div class="container my-5 checkout-wrapper">
+    <div class="row">
+        <!-- Billing Details -->
+        <div class="col-lg-7 mb-5">
+            <h2 class="mb-4">Billing Details</h2>
+            <form id="billing-form">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name *</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name *</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="company">Company name (optional)</label>
+                    <input type="text" class="form-control" id="company">
+                </div>
+                <div class="mb-3">
+                    <label for="country">Country / Region *</label>
+                    <select class="form-control" id="country" required>
+                        <option value="Germany">Germany</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="streetAddress1">Street address *</label>
+                    <input type="text" class="form-control mb-2" id="streetAddress1" placeholder="House number and street name" required>
+                    <input type="text" class="form-control" id="streetAddress2" placeholder="Apartment, suite, unit, etc. (optional)">
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="city">Town / City *</label>
+                        <input type="text" class="form-control" id="city" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="county">County (optional)</label>
+                        <input type="text" class="form-control" id="county">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="postcode">Postcode *</label>
+                    <input type="text" class="form-control" id="postcode" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone">Phone *</label>
+                    <input type="tel" class="form-control" id="phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email address *</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-md-5">
+            <h2>Your Order</h2>
+            <div class="border p-3 rounded mb-4 bg-light">
+                <div class="d-flex justify-content-between mb-2">
+                    <strong>Product</strong>
+                    <strong>Subtotal</strong>
+                </div>
+                <div id="order-items">
+                    <!-- Items will be inserted here by JS -->
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <span>Subtotal</span>
+                    <span id="order-subtotal">€0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <span>Delivery Fee</span>
+                    <span id="delivery-fee">€0.00</span>
+                </div>
+                <div id="free-delivery-message" class="text-success small mt-1" style="display:none"></div>
+                <hr>
+                <div class="d-flex justify-content-between font-weight-bold">
+                    <strong>Total</strong>
+                    <strong id="order-total">€0.00</strong>
+                </div>
+            </div>
+           <button class="btn btn-secondary btn-lg btn-block" onclick="testSubmitOrder()">Test Submit Order (No PayPal)</button>
+
+            <div id="paypal-button-container"></div>
+
+            <p class="mt-3 text-muted small">
+                Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#">privacy policy</a>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div id="footer"></div>
+
+<!-- javscript js -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/jquery.magnific-popup.min.js"></script>
+
+<script src="js/jquery.sticky.js"></script>
+<script src="js/jquery.backstretch.min.js"></script>
+
+<script src="js/isotope.js"></script>
+<script src="js/imagesloaded.min.js"></script>
+<script src="js/nivo-lightbox.min.js"></script>
+
+<script src="js/jquery.flexslider-min.js"></script>
+
+<script src="js/jquery.parallax.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/wow.min.js"></script>
+
+<script src="js/custom.js"></script>
+<script src="js/scripts.js"></script>
+<script>
+
+let userId = getOrCreateGuestUserId()
+
+function getOrCreateGuestUserId() {
+    let uid = localStorage.getItem("guestUserId");
+    if (!uid) {
+        uid = `guest-${crypto.randomUUID()}`;
+        localStorage.setItem("guestUserId", uid);
+    }
+    return uid;
+}
+
+</script>
+<script>
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer').innerHTML = data;
+        });
+</script>
+<script>
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar').innerHTML = data;
+        });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = localStorage.getItem('userId');
+        const apiUrl = `https://70a1dz3t08.execute-api.us-east-1.amazonaws.com/prod/cart?userId=${userId}&t=${Date.now()}`;
+        const orderList = document.querySelector('#order-items');
+        let orderSubtotal = 0;
+        let productCount = 0;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to fetch cart");
+                return response.json();
+            })
+            .then(cart => {
+                if (!Array.isArray(cart) || cart.length === 0) {
+                    orderList.innerHTML = '<div class="text-danger">Your order is empty.</div>';
+                    return;
+                }
+
+                orderList.innerHTML = '';
+                cart.forEach(item => {
+                    const quantity = parseInt(item.quantity);
+                    const price = parseFloat(item.price.toString().replace(/[^\d.]/g, ''));
+                    const subtotal = price * quantity;
+                    orderSubtotal += subtotal;
+                    productCount += quantity;
+                    let img_url = item.image_url;
+                    if (img_url && img_url.startsWith("https://zahzouh.de/uploads/")) {
+                        img_url = img_url.replace(
+                            "https://zahzouh.de/uploads/",
+                            "https://s3.eu-west-1.amazonaws.com/zahzouh.de/uploads/"
+                        );
+                    }
+
+                    const itemHTML = `
+          <div class="d-flex align-items-center border-top pt-3 pb-2">
+            <img src="${img_url}" alt="${item.product_name}" style="width: 50px; height: auto; margin-right: 10px;">
+            <div class="flex-grow-1">
+              <div>${item.product_name} × ${quantity}</div>
+              <div class="text-muted small">€${price.toFixed(2)} each</div>
+            </div>
+            <div><strong>€${subtotal.toFixed(2)}</strong></div>
+          </div>
+        `;
+                    orderList.insertAdjacentHTML('beforeend', itemHTML);
+                });
+
+                const DELIVERY_FEE = 3;
+                const deliveryCost = orderSubtotal >= 20 ? 0 : DELIVERY_FEE;
+
+                document.getElementById('order-subtotal').innerText = `€${orderSubtotal.toFixed(2)}`;
+                document.getElementById('delivery-fee').innerText = `€${deliveryCost.toFixed(2)}`;
+                const finalTotal = orderSubtotal + deliveryCost;
+                document.getElementById('order-total').innerText = `€${finalTotal.toFixed(2)}`;
+
+                const freeMsg = document.getElementById('free-delivery-message');
+                if (orderSubtotal < 20) {
+                    const diff = (20 - orderSubtotal).toFixed(2);
+                    freeMsg.textContent = `Add €${diff} more for free delivery`;
+                    freeMsg.style.display = 'block';
+                } else {
+                    freeMsg.style.display = 'none';
+                }
+            })
+            .catch(err => {
+                console.error("Checkout error:", err);
+                orderList.innerHTML = '<div class="text-danger">Could not load order items.</div>';
+            });
+    });
+</script>
+<script>
+    let cartItems = [];
+    let totalAmount = 0;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const userId = localStorage.getItem('userId');
+        const apiUrl = `https://70a1dz3t08.execute-api.us-east-1.amazonaws.com/prod/cart?userId=${userId}&t=${Date.now()}`;
+
+        try {
+            const response = await fetch(apiUrl);
+            cartItems = await response.json();
+            totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryExtra = totalAmount >= 20 ? 0 : 3;
+            totalAmount += deliveryExtra;
+        } catch (error) {
+            console.error("Failed to load cart for PayPal:", error);
+        }
+
+    });
+
+    async function submitOrder(cartItems, totalPrice) {
+        const userId = localStorage.getItem('userId');
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const fullName = `${firstName} ${lastName}`;
+        const orderPayload = {
+            userId: userId,
+            items: cartItems,
+            totalPrice: totalPrice,
+            address: {
+                name : fullName,
+                street: document.getElementById('streetAddress1').value,
+                city: document.getElementById('city').value,
+                postcode: document.getElementById('postcode').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value
+            }
+        };
+
+        try {
+            const response = await fetch('https://70a1dz3t08.execute-api.us-east-1.amazonaws.com/prod/order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({orderPayload: orderPayload})
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Order API error: ${errText}`);
+            }
+
+            alert('Order placed successfully!');
+            window.location.href = 'confirm.html'; // Redirect if you have a confirmation page
+        } catch (err) {
+            console.error('Error creating order:', err);
+            alert('Failed to create order: ' + err.message);
+        }
+    }
+</script>
+<script>
+    function testSubmitOrder() {
+        if (!cartItems || cartItems.length === 0) {
+            alert("Cart is empty, nothing to test.");
+            return;
+        }
+
+        if (confirm("Are you sure you want to test submit this order without payment?")) {
+            submitOrder(cartItems, totalAmount);
+        }
+    }
+</script>
+
+<script>
+    async function updateCartCount() {
+        try {
+            const userId = localStorage.getItem('userId');
+            const response = await fetch(`https://70a1dz3t08.execute-api.us-east-1.amazonaws.com/prod/cart?userId=${userId}&t=${Date.now()}`);
+
+            const cartItems = await response.json();
+
+            document.getElementById('cart-count').textContent = cartItems.length;
+            return cartItems.length;
+        } catch (error) {
+            console.error('Error updating cart count:', error);
+        }
+    }
+    updateCartCount();
+</script>
+</body>
+</html>

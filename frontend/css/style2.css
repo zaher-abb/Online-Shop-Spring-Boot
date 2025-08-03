@@ -1,0 +1,46 @@
+/* Limit product image size */
+.cart-item-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Ensure card content is properly spaced */
+.card-body .row {
+    align-items: center;
+}
+
+/* Align the summary properly */
+.summary-card {
+    position: sticky;
+    top: 100px;
+}
+
+/* Adjust quantity controls layout */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quantity-controls input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .cart-item-image {
+        max-width: 80px;
+        max-height: 80px;
+    }
+
+    .quantity-controls {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .summary-card {
+        position: static;
+    }
+}

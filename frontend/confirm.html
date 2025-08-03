@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You | JessaHerz</title>
+
+  <!-- Main Site Styles -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&family=Montserrat:400,700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .thank-you-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      border-radius: 20px;
+      margin: 5rem auto;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      animation: popIn 0.5s ease-out;
+    }
+
+    .checkmark svg {
+      width: 40px;
+      height: 40px;
+      fill: white;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-top: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    .btn-home {
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background: white;
+      color: #764ba2;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-home:hover {
+      background: #ddd;
+    }
+
+    .fa-envelope {
+      margin-right: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    a.contact-link {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    a.contact-link:hover {
+      text-decoration: none;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar Placeholder -->
+<div id="header-placeholder"></div>
+
+<!-- Thank You Message -->
+<main class="thank-you-container">
+  <div class="checkmark">
+    <svg viewBox="0 0 52 52">
+      <path d="M26,0C11.664,0,0,11.664,0,26s11.664,26,26,26s26-11.664,26-26S40.336,0,26,0z M21.707,39.293
+        l-11-11l2.828-2.828L21.707,33.636l17.758-17.758l2.828,2.828L21.707,39.293z"/>
+    </svg>
+  </div>
+  <h1>Thank You for Your Order!</h1>
+  <p>Your order has been placed successfully.<br>We'll send a confirmation email shortly.</p>
+
+  <div class="mt-4">
+    <p>
+      <i class="fa fa-envelope"></i>
+      <a href="mailto:support@jessaherz.com" class="contact-link">
+        Contact us if you have any issues
+      </a>
+    </p>
+  </div>
+
+  <button class="btn-home" onclick="goHome()">Back to Home</button>
+</main>
+
+<!-- Footer Placeholder -->
+<div id="footer"></div>
+
+<!-- JS Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function goHome() {
+    window.location.href = '/';
+  }
+
+  // Dynamically load navbar and footer
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch('navbar.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+    fetch('footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer').innerHTML = html);
+  });
+</script>
+
+</body>
+</html>

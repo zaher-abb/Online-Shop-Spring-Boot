@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Orders</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<ul class="nav nav-tabs mb-4 container">
+    <li><a href="index.html">Products</a></li>
+    <li class="active"><a href="order.html">Orders</a></li>
+</ul>
+
+<div class="container mt-4">
+    <h2>Create Order</h2>
+    <table id="all-products" class="table table-bordered">
+        <thead>
+            <tr><th>Name</th><th>Price</th><th></th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h3>Order Items</h3>
+    <table id="order-items" class="table table-bordered">
+        <thead>
+            <tr><th>Name</th><th>Size</th><th>Qty</th><th>Price</th><th></th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button id="create-invoice" class="btn btn-primary" disabled>Create Invoice</button>
+</div>
+
+<!-- Modal for adding item -->
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Item</h4>
+      </div>
+      <div class="modal-body">
+        <form id="add-form">
+            <div class="form-group">
+                <label for="item-size">Size</label>
+                <select id="item-size" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="item-qty">Quantity</label>
+                <input type="number" id="item-qty" class="form-control" value="1" min="1">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="add-item" type="button" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer"></div>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/admin-orders.js"></script>
+<script>
+fetch('../navbar.html').then(r=>r.text()).then(t=>document.getElementById('header-placeholder').innerHTML=t);
+fetch('../footer.html').then(r=>r.text()).then(t=>document.getElementById('footer').innerHTML=t);
+</script>
+</body>
+</html>

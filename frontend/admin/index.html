@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<ul class="nav nav-tabs mb-4 container">
+    <li class="active"><a href="index.html">Products</a></li>
+    <li><a href="order.html">Orders</a></li>
+</ul>
+
+<div class="container mt-5">
+    <h2>Create Voucher</h2>
+    <form id="voucher-form" class="mb-5">
+        <div class="mb-3">
+            <label for="voucher-code" class="form-label">Code</label>
+            <input type="text" id="voucher-code" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="voucher-discount" class="form-label">Discount (%)</label>
+            <input type="number" id="voucher-discount" class="form-control" required min="1" max="100">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    <h2>Products</h2>
+    <table id="product-table" class="table table-bordered table-striped">
+        <thead>
+            <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Edit product modal -->
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="edit-form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="editModalLabel">Edit Product</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit-id">
+                        <div class="form-group">
+                            <label for="edit-name">Name</label>
+                            <input type="text" id="edit-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-price">Price</label>
+                            <input type="number" id="edit-price" class="form-control" required step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-description">Description</label>
+                            <textarea id="edit-description" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-category">Category</label>
+                            <input type="text" id="edit-category" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-image">Photo</label>
+                            <input type="file" id="edit-image" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+fetch('../navbar.html').then(r=>r.text()).then(t=>document.getElementById('header-placeholder').innerHTML=t);
+fetch('../footer.html').then(r=>r.text()).then(t=>document.getElementById('footer').innerHTML=t);
+</script>
+</body>
+</html>

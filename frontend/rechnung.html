@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kassenzettel</title>
+  <style>
+    body {
+      font-family: monospace;
+      width: 58mm;
+      margin: 0 auto;
+      padding: 10px;
+    }
+    .center { text-align: center; }
+    .right { text-align: right; }
+    .bold { font-weight: bold; }
+    hr {
+      border: none;
+      border-top: 1px dashed #000;
+      margin: 8px 0;
+    }
+    img.logo {
+      width: 200px;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+    @media print {
+      #printButton { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<button id="printButton" onclick="window.print()">🖨️ Drucken</button>
+
+<!-- 🔻 Your Logo Here -->
+<img class="logo" src="images/logo2.png" alt="JessaherZ Logo" />
+
+<hr>
+
+<div id="invoice-date">Datum:</div>
+<div id="invoice-number">Rechnung Nr:</div>
+
+<hr>
+
+<table id="items"></table>
+
+<hr>
+
+<table id="summary"></table>
+
+<hr>
+
+<div class="center">Vielen Dank für Ihren Besuch!</div>
+
+<!-- 🔻 Your Logo Here -->
+<img class="logo" src="images/qr_jnstagram.jpeg" alt="JessaherZ Logo" />
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  let info;
+  try {
+    info = JSON.parse(decodeURIComponent(params.get('data')));
+  } catch(e) {
+    info = {items: []};
+  }
+  const itemsTable = document.getElementById('items');
+  let subtotal = 0;
+  info.items.forEach(it => {
+    const row = document.createElement('tr');
+    const price = it.price * it.qty;
+    subtotal += price;
+    row.innerHTML = `<td>${it.name}${it.size?` (${it.size})`:''} x ${it.qty}</td><td class="right">€${price.toFixed(2)}</td>`;
+    itemsTable.appendChild(row);
+  });
+  const summary = document.getElementById('summary');
+  const vat = subtotal * 0.07;
+  const total = subtotal + vat;
+  summary.innerHTML = `<tr><td>Zwischensumme</td><td class="right">€${subtotal.toFixed(2)}</td></tr>`+
+    `<tr><td>inkl. MwSt (7%)</td><td class="right">€${vat.toFixed(2)}</td></tr>`+
+    `<tr class="bold"><td>Gesamt</td><td class="right">€${total.toFixed(2)}</td></tr>`;
+  document.getElementById('invoice-date').textContent = 'Datum: ' + (info.date || new Date().toLocaleDateString('de-DE'));
+  const rnd = Math.floor(Math.random()*9000+1000);
+  document.getElementById('invoice-number').textContent = 'Rechnung Nr: ' + rnd;
+})();
+</script>
+</body>
+</html>

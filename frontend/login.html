@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Login | JessaHerZ</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+<!-- Preloader -->
+<div class="preloader">
+    <div class="sk-spinner sk-spinner-pulse"></div>
+</div>
+
+<!-- Navbar -->
+<div id="navbar"></div>
+
+<!-- Login Section -->
+<section id="login" class="parallax-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="wow fadeInUp section-title" data-wow-delay="0.3s">
+                    <h2>Account Login</h2>
+                </div>
+
+                <div class="contact-form wow fadeInUp" data-wow-delay="0.7s" style="text-align: center;">
+                    <button id="signIn" class="btn btn-primary btn-lg">Sign In with Cognito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div id="footer"></div>
+
+<!-- Scripts -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Dynamic Navbar/Footer -->
+<script>
+    fetch('navbar.html').then(res => res.text()).then(data => {
+        document.getElementById('navbar').innerHTML = data;
+    });
+    fetch('footer.html').then(res => res.text()).then(data => {
+        document.getElementById('footer').innerHTML = data;
+    });
+</script>
+
+<!-- OIDC Cognito Sign-In -->
+<script type="module">
+    import { login } from './js/auth.js';
+
+    document.getElementById('signIn').addEventListener('click', login);
+</script>
+</body>
+</html>
